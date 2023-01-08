@@ -1,4 +1,4 @@
-![fluffyUILogo](https://github.com/TRC-Loop/fluffyUI/raw/7fa4cb61d452c982478d247b30a7ead5bfbb120f/other/logo-color.png | width=100, height=100)
+![fluffyUILogo](https://github.com/TRC-Loop/fluffyUI/raw/7fa4cb61d452c982478d247b30a7ead5bfbb120f/other/logo-color.png)
 #### A new way to make GUIs in the Console
 ##### (In python)
 ## What is fluffyUI?
