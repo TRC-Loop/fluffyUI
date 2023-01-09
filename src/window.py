@@ -20,6 +20,7 @@ class Grid:
         for row in range(self.rows):
             if self.show:
                 res += ' | '.join([self._format_cell(row, col, max_lengths) for col in range(self.columns)])
+            if self.show:
                 res += '\n' + '-' * sum(max_lengths[col] + 3 for col in range(self.columns)) + '\n'
             else:
                 res += f'{self.repr_char_notshow}'.join([self._format_cell(row, col, max_lengths) for col in range(self.columns)])
@@ -56,18 +57,29 @@ class Grid:
         return result
     
     def set(self, row, column, value, align=None):
-        self.grid[row][column] = value
-        if align is not None:
-            self.alignments[(row, column)] = align
+        try:
+            self.grid[row][column] = value
+            if align is not None:
+                self.alignments[(row, column)] = align
+        except IndexError:
+            raise IndexError(f'Index out of range: ({row}, {column}), grid size: ({self.rows}, {self.columns}). That Col/Row is not existing. Our Index starts with 0.')
+
+
+    def get(self, row, column):
+        return self.grid[row][column]
+
+    def show(self):
+        self.show = True
+
+    def hide(self):
+        self.show = False
 
 
 
-
-
-
-with Grid(5, 5, show=False) as gr:
-    gr.set(0, 0, "Hello", align='center')
-    gr.set(1, 1, "World", align='right')
-    gr.set(4, 3, "Just Fun", align='left')
-    gr.set(1, 2, "!", align='center')
+with Grid(5, 1, show=True, repr_char_notshow="\t", empty_cell="") as gr:
+    gr.set(0, 0, "FluffyUI for Python.", align='center')
+    gr.set(1, 0, "Easy as that!", align='center')
+    gr.set(2, 0, "Time to make your", align='center')
+    gr.set(3, 0, "OWN GUI", align='center')
     print(gr)
+    print(gr.get(0, 0))
