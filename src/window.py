@@ -1,10 +1,10 @@
 class Grid:
-    def __init__(self, rows, columns, show=True, empty_cell='none', repr_char_notshow=""):
+    def __init__(self, rows, columns, show=True, empty_cell='none', repr_char_novalue=""):
         self.rows = rows
         self.columns = columns
         self.show = show
         self.empty_cell = empty_cell
-        self.repr_char_notshow = repr_char_notshow
+        self.repr_char_novalue = repr_char_novalue
         self.grid = [[None for _ in range(columns)] for _ in range(rows)]
         self.alignments = {}
     
@@ -16,14 +16,15 @@ class Grid:
     
     def __repr__(self):
         max_lengths = [max(len(str(self.grid[row][col])) for row in range(self.rows)) for col in range(self.columns)]
+        print(max_lengths)
         res = ''
         for row in range(self.rows):
             if self.show:
                 res += ' | '.join([self._format_cell(row, col, max_lengths) for col in range(self.columns)])
             if self.show:
                 res += '\n' + '-' * sum(max_lengths[col] + 3 for col in range(self.columns)) + '\n'
-            else:
-                res += f'{self.repr_char_notshow}'.join([self._format_cell(row, col, max_lengths) for col in range(self.columns)])
+            if not self.show:
+                res += f'{self.repr_char_novalue}'.join([self._format_cell(row, col, max_lengths) for col in range(self.columns)])
                 res += '\n'
         return res
     
@@ -76,10 +77,10 @@ class Grid:
 
 
 
-with Grid(5, 1, show=True, repr_char_notshow="\t", empty_cell="") as gr:
-    gr.set(0, 0, "FluffyUI for Python.", align='center')
+with Grid(5, 5, show=True, repr_char_novalue="\t", empty_cell="") as gr:
+    gr.set(0, 1, "FluffyUI for Python.", align='center')
     gr.set(1, 0, "Easy as that!", align='center')
-    gr.set(2, 0, "Time to make your", align='center')
-    gr.set(3, 0, "OWN GUI", align='center')
+    gr.set(2, 3, "Time to make your", align='center')
+    gr.set(3, 4, "OWN GUI", align='center')
     print(gr)
     print(gr.get(0, 0))
